@@ -58,6 +58,14 @@ inline double dist(double x1, double y1, double x2, double y2) {
 	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
+inline double gaussian_prob(double obs_x, double obs_y, double mu_x, double mu_y, double sig_x, double sig_y) {
+  double gauss_norm = (1.0/(2.0 * M_PI * sig_x * sig_y));
+  double exponent = pow((obs_x - mu_x), 2.0)/(2.0 * pow(sig_x, 2.0)) + pow((obs_y - mu_y), 2.0)/(2.0 * pow(sig_y, 2.0));
+//  std::cout << obs_x << ", " << obs_y << ", " << mu_x << ", " << mu_y << ", " << sig_x << ", " << sig_y  << std::endl;
+//  std::cout << gauss_norm << ", " << exponent << std::endl;
+  return gauss_norm * exp(-exponent);
+}
+
 inline double * getError(double gt_x, double gt_y, double gt_theta, double pf_x, double pf_y, double pf_theta) {
 	static double error[3];
 	error[0] = fabs(pf_x - gt_x);
